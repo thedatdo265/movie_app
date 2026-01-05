@@ -4,9 +4,11 @@ import 'movie_card.dart';
 
 class MovieList extends StatelessWidget {
   final List<Movie> movies;
-  final void Function(Movie)? onTapMovie;
 
-  const MovieList({super.key, required this.movies, this.onTapMovie});
+  const MovieList({
+    super.key,
+    required this.movies,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +24,7 @@ class MovieList extends StatelessWidget {
       ),
       itemCount: movies.length,
       itemBuilder: (context, index) {
-        final movie = movies[index];
-        return MovieCard(movie: movie, onTap: () => onTapMovie?.call(movie));
+        return MovieCard(movie: movies[index]);
       },
     );
   }

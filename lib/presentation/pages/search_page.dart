@@ -5,7 +5,7 @@ import '../widgets/movie_list.dart';
 import '../widgets/loading_indicator.dart';
 
 class SearchPage extends StatefulWidget {
-  final String initialQuery; // thêm biến này
+  final String initialQuery;
 
   const SearchPage({super.key, this.initialQuery = ''}); // default ''
 

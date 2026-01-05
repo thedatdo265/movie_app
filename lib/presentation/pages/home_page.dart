@@ -45,6 +45,12 @@ class _HomePageState extends State<HomePage> {
             ),
             onPressed: () => themeProvider.toggleTheme(),
           ),
+          IconButton(
+            icon: const Icon(Icons.favorite),
+            onPressed: () {
+              Navigator.pushNamed(context, '/favorites');
+            },
+          ),
         ],
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(60),

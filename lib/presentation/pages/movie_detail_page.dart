@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../data/models/movie.dart';
 import '../../core/constants.dart';
+import 'package:provider/provider.dart';
+import '../../data/providers/favorites_provider.dart';
 
 class MovieDetailPage extends StatelessWidget {
   final Movie movie;
@@ -23,21 +25,26 @@ class MovieDetailPage extends StatelessWidget {
             expandedHeight: 250,
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
+              titlePadding: const EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 12,
+              ),
               title: Text(
                 movie.title,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
                   fontSize: 16,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.white,
                   shadows: [
                     Shadow(
-                      color: Colors.black54,
-                      offset: Offset(0, 1),
-                      blurRadius: 2,
+                      offset: Offset(0, 2),
+                      blurRadius: 6,
+                      color: Colors.black87,
                     ),
                   ],
                 ),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
               ),
               background: Stack(
                 fit: StackFit.expand,
@@ -61,6 +68,24 @@ class MovieDetailPage extends StatelessWidget {
                 ],
               ),
             ),
+            actions: [
+              Consumer<FavoritesProvider>(
+                builder: (context, favProvider, _) {
+                  final isFav = favProvider.isFavorite(movie);
+                  return IconButton(
+                    icon: Icon(
+                      isFav ? Icons.favorite : Icons.favorite_border,
+                      color: isFav ? Colors.red : Colors.white,
+                    ),
+                    onPressed: () {
+                      isFav
+                          ? favProvider.removeFavorite(movie)
+                          : favProvider.addFavorite(movie);
+                    },
+                  );
+                },
+              ),
+            ],
           ),
           SliverToBoxAdapter(
             child: Padding(
@@ -91,7 +116,9 @@ class MovieDetailPage extends StatelessWidget {
                             Text(
                               'Release: ${formatDate(movie.releaseDate)}',
                               style: const TextStyle(
-                                  fontSize: 14, fontWeight: FontWeight.w500),
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
                             const SizedBox(height: 8),
                             Row(
@@ -101,7 +128,9 @@ class MovieDetailPage extends StatelessWidget {
                                 Text(
                                   movie.voteAverage.toString(),
                                   style: const TextStyle(
-                                      fontSize: 14, fontWeight: FontWeight.w500),
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
                               ],
                             ),
@@ -114,8 +143,7 @@ class MovieDetailPage extends StatelessWidget {
                   // Overview
                   const Text(
                     'Overview',
-                    style: TextStyle(
-                        fontSize: 16, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 8),
                   Text(

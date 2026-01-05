@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import '../../data/providers/favorites_provider.dart';
 import '../widgets/movie_list.dart';
 
@@ -15,8 +16,13 @@ class FavoritesPage extends StatelessWidget {
       appBar: AppBar(title: const Text('Favorites')),
       body:
           favorites.isEmpty
-              ? const Center(child: Text('No favorite movies'))
-              : MovieList(movies: favorites),
+              ? const Center(
+                child: Text(
+                  'No favorite movies yet',
+                  style: TextStyle(fontSize: 16),
+                ),
+              )
+              : SingleChildScrollView(child: MovieList(movies: favorites)),
     );
   }
 }
